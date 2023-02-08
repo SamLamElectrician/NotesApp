@@ -1,19 +1,18 @@
-import express from 'express';
-//for environment keys
-import 'dotenv/config';
-//for mongooes settings
+//file for database settings
+
+//import server relating things
+import app from './app';
+//for mongoose settings
 import mongoose from 'mongoose';
+//default export for function in utility folder
+import env from './utility/validateEnv';
 
-const app = express();
+//using hidden port located in env
+const port = env.PORT;
 
-app.get('/', (req, res) => {
-	res.send('hello world');
-});
-
-const port = process.env.PORT;
-
+//connecting to mongo
 mongoose
-	.connect(process.env.MONGO_CONNECTION_STRING!)
+	.connect(env.MONGO_CONNECTION_STRING)
 	.then(() => {
 		console.log('Mongoose connected');
 		app.listen(port, () => {
