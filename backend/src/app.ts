@@ -21,27 +21,21 @@ app.get('/', async (req, res) => {
 		//make sure read write is allowed for user
 	} catch (error) {
 		console.error;
-		let errorMessage = 'An unknown error occured';
-		//checking if the type is error
-		if (error instanceof Error) {
-			errorMessage = error.message;
-			//manually putting json, whereas notes is an array
-			res.status(500).json({ error: errorMessage });
-		}
 	}
 });
 
 // error handler kick in automatically, below normal endpoint
 // takes very specific argument, error,
 // set type here because .use type can be anything
-app.use(
-	(error: unknown, req: Request, res: Response, next: NextFunction) => {console.error;
-		let errorMessage = 'An unknown error occured';
-		//checking if the type is error
-		if (error instanceof Error) {
-			errorMessage = error.message;
-			//manually putting json, whereas notes is an array
-			res.status(500).json({ error: errorMessage })
-		})
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+	console.error;
+	let errorMessage = 'An unknown error occured';
+	//checking if the type is error
+	if (error instanceof Error) {
+		errorMessage = error.message;
+		//manually putting json, whereas notes is an array
+		res.status(500).json({ error: errorMessage });
+	}
+});
 
 export default app;
