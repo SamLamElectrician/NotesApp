@@ -7,6 +7,13 @@ import notesRoutes from './routes/notes';
 
 const app = express();
 
+//sets up express to accept and send json
+app.use(express.json());
+
+//middle ware that goes to notes route
+//changes url to api/notes
+app.use('/api/notes', notesRoutes);
+
 // only typing for errors
 // error handling for unknown endpoint
 app.use((req, res, next) => {

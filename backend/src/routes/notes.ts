@@ -7,4 +7,9 @@ const router = express.Router();
 
 router.get('/', NotesController.getNotes);
 
+//you can use / as they are both different http methods
+//different data, use differnt end points
+//post request
+router.post('/', NotesController.createNotes);
+
 export default router;

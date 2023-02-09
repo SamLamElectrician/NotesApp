@@ -17,3 +17,18 @@ export const getNotes: RequestHandler = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const createNotes: RequestHandler = async (req, res, next) => {
+	//getting data from request
+	const title = req.body.title;
+	const text = req.body.text;
+	try {
+		//new node for mongo
+		const newNote = await NoteModel.create({
+			title: title,
+			text: text,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
