@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', NotesController.getNotes);
 
-//get request for data refering to id of note
+//get request for specific data refering to id of note
 router.get('/:noteId', NotesController.getNote);
 
 //you can use / as they are both different http methods

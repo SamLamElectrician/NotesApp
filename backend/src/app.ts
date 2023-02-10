@@ -4,8 +4,13 @@
 import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import notesRoutes from './routes/notes';
+import morgan from 'morgan';
+import createHttpError from 'http-errors';
 
 const app = express();
+//middle ware for logging information and amount of information printed to console
+// prints log of all the end point we access
+app.use(morgan('dev'));
 
 //sets up express to accept and send json
 app.use(express.json());
@@ -18,7 +23,8 @@ app.use('/api/notes', notesRoutes);
 // error handling for unknown endpoint
 app.use((req, res, next) => {
 	//create an error that sends back this string
-	next(Error('Endpoint not found'));
+	//two arguments, http status code and error message
+	next(createHttpError(404, 'Endpoint not found'));
 });
 
 // error handler kick in automatically, below normal endpoint
