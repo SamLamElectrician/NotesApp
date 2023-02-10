@@ -18,6 +18,18 @@ export const getNotes: RequestHandler = async (req, res, next) => {
 	}
 };
 
+export const getNote: RequestHandler = async (req, res, next) => {
+	const noteId = req.params.noteId;
+
+	try {
+		//finding node by note ID
+		const note = await NoteModel.findById(noteId).exec();
+		res.status(200).json(note);
+	} catch (error) {
+		next(error);
+	}
+};
+
 export const createNotes: RequestHandler = async (req, res, next) => {
 	//getting data from request
 	const title = req.body.title;
@@ -28,6 +40,8 @@ export const createNotes: RequestHandler = async (req, res, next) => {
 			title: title,
 			text: text,
 		});
+		//201 is for new resource created
+		res.status(201).json(newNote);
 	} catch (error) {
 		next(error);
 	}
