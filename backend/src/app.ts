@@ -5,7 +5,7 @@ import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import notesRoutes from './routes/notes';
 import morgan from 'morgan';
-import createHttpError from 'http-errors';
+import createHttpError, { isHttpError } from 'http-errors';
 
 const app = express();
 //middle ware for logging information and amount of information printed to console
@@ -35,12 +35,18 @@ app.use((req, res, next) => {
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
 	console.error;
 	let errorMessage = 'An unknown error occured';
-	//checking if the type is error
-	if (error instanceof Error) {
+	//defaulted to 500
+	let statusCode = 500;
+	//checking if the type is error of http package
+	if (isHttpError(error)) {
+		statusCode = error.status;
 		errorMessage = error.message;
 		//manually putting json, whereas notes is an array
-		res.status(500).json({ error: errorMessage });
 	}
+	//imperativly programing status code
+	res.status(statusCode).json({ error: errorMessage });
 });
 
 export default app;
+
+//left at 2:07
