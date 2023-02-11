@@ -30,7 +30,21 @@ export const getNote: RequestHandler = async (req, res, next) => {
 	}
 };
 
-export const createNotes: RequestHandler = async (req, res, next) => {
+//different between types, more flexible than types
+interface CreateNoteBody {
+	//reason becasue it might be missing from request
+	title?: string;
+	// ? means might be optional
+	text?: string;
+}
+
+// angle brackets are for type assertion
+export const createNotes: RequestHandler<
+	unknown,
+	unknown,
+	CreateNoteBody,
+	unknown
+> = async (req, res, next) => {
 	//getting data from request
 	const title = req.body.title;
 	const text = req.body.text;
