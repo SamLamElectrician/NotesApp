@@ -16,5 +16,3 @@ router.get('/:noteId', NotesController.getNote);
 router.post('/', NotesController.createNotes);
 
 export default router;
-
-//left at 2:11

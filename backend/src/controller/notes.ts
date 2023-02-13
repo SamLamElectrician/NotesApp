@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import createHttpError from 'http-errors';
 import NoteModel from '../models/note';
 
 // async in get request
@@ -39,6 +40,7 @@ interface CreateNoteBody {
 }
 
 // angle brackets are for type assertion
+// takes four arguements
 export const createNotes: RequestHandler<
 	unknown,
 	unknown,
@@ -49,6 +51,12 @@ export const createNotes: RequestHandler<
 	const title = req.body.title;
 	const text = req.body.text;
 	try {
+		if (!title) {
+			//from http status code
+			//400 is bad request in case of missing argument in request
+			throw createHttpError(400, 'Note must have a title');
+			//throw automatically leaves try and goes to catch block
+		}
 		//new node for mongo
 		const newNote = await NoteModel.create({
 			title: title,
