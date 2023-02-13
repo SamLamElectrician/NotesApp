@@ -123,8 +123,14 @@ export const updateNote: RequestHandler<
 		note.text = newText;
 		//gets new note
 		const updatedNote = await note.save();
-		res.status(200).json(updateNote);
+		res.status(200).json(updatedNote);
 	} catch (error) {
 		next(error);
 	}
 };
+
+//no body so typescript doesnt need interface, default params
+export const deleteNode: RequestHandler = async (req, res, next) => {
+	const noteId = req.params.noteId;
+};
+//left at 2:33
