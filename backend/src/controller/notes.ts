@@ -25,6 +25,10 @@ export const getNote: RequestHandler = async (req, res, next) => {
 	try {
 		//finding node by note ID
 		const note = await NoteModel.findById(noteId).exec();
+
+		if (!note) {
+			throw createHttpError(404, 'Note not found!');
+		}
 		res.status(200).json(note);
 	} catch (error) {
 		next(error);
