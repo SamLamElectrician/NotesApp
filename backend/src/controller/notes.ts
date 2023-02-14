@@ -141,7 +141,7 @@ export const deleteNode: RequestHandler = async (req, res, next) => {
 			throw createHttpError(404, 'Note not found!');
 		}
 		await note.remove();
-		//deletion sucessful
+		//http code deletion sucessful
 		res.sendStatus(204);
 	} catch (error) {
 		next(error);
