@@ -132,5 +132,19 @@ export const updateNote: RequestHandler<
 //no body so typescript doesnt need interface, default params
 export const deleteNode: RequestHandler = async (req, res, next) => {
 	const noteId = req.params.noteId;
+	try {
+		if (!mongoose.isValidObjectId(noteId)) {
+			throw createHttpError(400, 'invalid note ID');
+		}
+		const note = await NoteModel.findById(noteId).exec();
+		if (!note) {
+			throw createHttpError(404, 'Note not found!');
+		}
+		await note.remove();
+		//deletion sucessful
+		res.sendStatus(204);
+	} catch (error) {
+		next(error);
+	}
 };
 //left at 2:33
