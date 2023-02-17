@@ -30,9 +30,9 @@ function App() {
 
 	return (
 		<div className='App'>
-			{notes.map((note) => {
-				<Notes note={note} />;
-			})}
+			{notes.map((note) => (
+				<Note note={note} key={note._id} />
+			))}
 		</div>
 	);
 }

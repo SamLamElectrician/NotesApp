@@ -7,10 +7,12 @@ interface NoteProps {
 }
 
 export default function Notes({ note }: NoteProps) {
+	const { title, text, createdAt, updatedAt } = note;
 	return (
 		<Card>
 			<Card.Body>
-				<Card.Title>{note.title}</Card.Title>
+				<Card.Title>{title}</Card.Title>
+				<Card.Text>{text}</Card.Text>
 			</Card.Body>
 		</Card>
 	);
