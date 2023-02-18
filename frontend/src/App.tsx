@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Notes';
 
@@ -29,13 +28,13 @@ function App() {
 	}, []);
 
 	return (
-		<div className='App'>
+		<div>
 			{notes.map((note) => (
 				<Note note={note} key={note._id} />
 			))}
 		</div>
 	);
 }
-//301
+//324
 
 export default App;
