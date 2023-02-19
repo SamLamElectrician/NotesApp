@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Notes';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function App() {
 	//empty array state
@@ -28,11 +29,17 @@ function App() {
 	}, []);
 
 	return (
-		<div>
-			{notes.map((note) => (
-				<Note note={note} key={note._id} />
-			))}
-		</div>
+		<Container>
+			{/* sizing relative to screen size and how many rows */}
+			{/* g-4 from bootstrap docs */}
+			<Row xs={1} md={2} xl={3} className='g-4'>
+				{notes.map((note) => (
+					<Col key={note._id}>
+						<Note note={note} />
+					</Col>
+				))}
+			</Row>
+		</Container>
 	);
 }
 //324
