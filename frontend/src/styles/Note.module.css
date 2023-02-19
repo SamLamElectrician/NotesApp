@@ -4,4 +4,10 @@
 
 .cardText {
 	white-space: pre-line;
+	/* adds a gradient to indicate more is below */
+	mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.cardBody {
+	overflow: hidden;
 }
