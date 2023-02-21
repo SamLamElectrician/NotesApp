@@ -4,10 +4,13 @@ import Note from './components/Notes';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from './styles/NotePage.module.css';
 import * as NotesApi from './network/notes_api';
+import AddNoteDialogue from './components/AddNoteDialogue';
 
 function App() {
 	//empty array state
 	const [notes, setNotes] = useState<NoteModel[]>([]);
+	//steate to show if modal is open or not
+	const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
 
 	//executes sideeffects outside render
 	useEffect(() => {
@@ -36,6 +39,8 @@ function App() {
 					</Col>
 				))}
 			</Row>
+			{/* inline if with logical && operator */}
+			{showAddNoteDialog && <AddNoteDialogue />}
 		</Container>
 	);
 }
