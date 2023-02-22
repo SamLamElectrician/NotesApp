@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Notes';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import styles from './styles/NotePage.module.css';
 import * as NotesApi from './network/notes_api';
 import AddNoteDialogue from './components/AddNoteDialogue';
@@ -30,6 +30,13 @@ function App() {
 
 	return (
 		<Container>
+			<Button
+				onClick={() => {
+					setShowAddNoteDialog(true);
+				}}
+			>
+				Add New Note
+			</Button>
 			{/* sizing relative to screen size and how many rows */}
 			{/* g-4 from bootstrap docs */}
 			<Row xs={1} md={2} xl={3} className='g-4'>
@@ -40,10 +47,15 @@ function App() {
 				))}
 			</Row>
 			{/* inline if with logical && operator */}
-			{showAddNoteDialog && <AddNoteDialogue />}
+			{showAddNoteDialog && (
+				<AddNoteDialogue
+					onDismiss={() => {
+						setShowAddNoteDialog(false);
+					}}
+				/>
+			)}
 		</Container>
 	);
 }
-//324
 
 export default App;
