@@ -52,6 +52,10 @@ function App() {
 					onDismiss={() => {
 						setShowAddNoteDialog(false);
 					}}
+					onNoteSaved={(newNote) => {
+						setNotes([...notes, newNote]);
+						setShowAddNoteDialog(false);
+					}}
 				/>
 			)}
 		</Container>

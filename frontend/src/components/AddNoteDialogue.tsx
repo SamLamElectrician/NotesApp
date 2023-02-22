@@ -42,6 +42,7 @@ export default function AddNoteDialogue({
 							<Form.Control
 								type='text'
 								placeholder='Title'
+								isInvalid={!!errors.title}
 								{...register('title', { required: 'Required' })}
 							></Form.Control>
 							<Form.Control.Feedback type='invalid'>
@@ -60,7 +61,9 @@ export default function AddNoteDialogue({
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button type='submit'>Save</Button>
+					<Button type='submit' form='addNoteForm' disabled={isSubmitting}>
+						Save
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		</div>
