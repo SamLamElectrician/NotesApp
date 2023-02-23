@@ -40,6 +40,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
 	return response.json();
 }
 
+//deleting node from frotn end
 export async function deleteNote(noteId: string) {
-	await fetchData('/api.notes/' + noteId);
+	await fetchData('/api.notes/' + noteId, { method: 'DELETE' });
 }
