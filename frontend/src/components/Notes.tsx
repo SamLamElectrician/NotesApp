@@ -29,18 +29,16 @@ export default function Notes({
 			<Card.Body className={styles.cardBody}>
 				<Card.Title className={stylesUtils.flexCenter}>
 					{title}
-					<MdDelete className='text-muted ms-auto'></MdDelete>
+					<MdDelete
+						className='text-muted ms-auto'
+						onClick={(e) => {
+							onDeleteNoteClicked(note);
+							//allows click to go through
+							e.stopPropagation();
+						}}
+					></MdDelete>
 				</Card.Title>
-				<Card.Text
-					className={styles.cardText}
-					onClick={(e: React.MouseEvent<HTMLElement>) => {
-						onDeleteNoteClicked(note);
-						//allows click to go through
-						e.stopPropagation();
-					}}
-				>
-					{text}
-				</Card.Text>
+				<Card.Text className={styles.cardText}>{text}</Card.Text>
 			</Card.Body>
 			<Card.Footer className='text-muted'>{createdUpdatedText}</Card.Footer>
 		</Card>
