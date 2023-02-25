@@ -6,6 +6,7 @@ import styles from './styles/NotePage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
 import AddNoteDialogue from './components/AddNoteDialogue';
+import { FaPlus } from 'react-icons/fa';
 
 function App() {
 	//empty array state
@@ -43,11 +44,12 @@ function App() {
 	return (
 		<Container>
 			<Button
-				className={`mb-4 ${styleUtils.blockCenter}`}
+				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
 				onClick={() => {
 					setShowAddNoteDialog(true);
 				}}
 			>
+				<FaPlus />
 				Add New Note
 			</Button>
 			{/* sizing relative to screen size and how many rows */}
