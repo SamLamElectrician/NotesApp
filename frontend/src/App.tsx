@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import styles from './styles/NotePage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
-import AddNoteDialogue from './components/AddNoteDialogue';
+import AddEditNoteDialogue from './components/AddEditNoteDialogue';
 import { FaPlus } from 'react-icons/fa';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
 	//steate to show if modal is open or not
 	const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 
 	//executes sideeffects outside render
 	useEffect(() => {
@@ -67,7 +68,7 @@ function App() {
 			</Row>
 			{/* inline if with logical && operator */}
 			{showAddNoteDialog && (
-				<AddNoteDialogue
+				<AddEditNoteDialogue
 					onDismiss={() => {
 						setShowAddNoteDialog(false);
 					}}
