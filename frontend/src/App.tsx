@@ -61,6 +61,7 @@ function App() {
 						<Note
 							note={note}
 							className={styles.note}
+							onNoteClicked={setNoteToEdit}
 							onDeleteNoteClicked={deleteNote}
 						/>
 					</Col>
@@ -75,6 +76,22 @@ function App() {
 					onNoteSaved={(newNote) => {
 						setNotes([...notes, newNote]);
 						setShowAddNoteDialog(false);
+					}}
+				/>
+			)}
+			{noteToEdit && (
+				<AddEditNoteDialogue
+					noteToEdit={noteToEdit}
+					onDismiss={() => setNoteToEdit(null)}
+					onNoteSaved={(updatedNote) => {
+						setNoteToEdit(null);
+						setNotes(
+							notes.map((existingNote) =>
+								existingNote._id === updatedNote._id
+									? updatedNote
+									: existingNote
+							)
+						);
 					}}
 				/>
 			)}
