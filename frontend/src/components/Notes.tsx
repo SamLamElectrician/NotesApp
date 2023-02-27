@@ -2,6 +2,7 @@ import styles from '../styles/Note.module.css';
 import { Card } from 'react-bootstrap';
 import { Note as NoteModel } from '../models/note';
 import { formatDate } from '../utils/formateDate';
+//delete button import
 import { MdDelete } from 'react-icons/md';
 import stylesUtils from '../styles/utils.module.css';
 
@@ -32,9 +33,12 @@ export default function Notes({
 			onClick={() => onNoteClicked(note)}
 		>
 			<Card.Body className={styles.cardBody}>
+				{/* adding a flex box to the title */}
 				<Card.Title className={stylesUtils.flexCenter}>
 					{title}
+					{/* MD delete is a garbage can */}
 					<MdDelete
+						//text-muted greys the icon, ms-auto auto alligns it
 						className='text-muted ms-auto'
 						onClick={(e) => {
 							onDeleteNoteClicked(note);

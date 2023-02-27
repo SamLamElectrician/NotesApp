@@ -1,4 +1,3 @@
-import { json } from 'stream/consumers';
 import { Note } from '../models/note';
 
 //params from fetch call
@@ -43,6 +42,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
 
 //deleting node from frotn end
 export async function deleteNote(noteId: string) {
+	//fetches the data by note ID and deletes it
 	await fetchData('/api/notes/' + noteId, { method: 'DELETE' });
 }
 
