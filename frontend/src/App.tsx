@@ -62,6 +62,7 @@ function App() {
 							note={note}
 							className={styles.note}
 							onNoteClicked={setNoteToEdit}
+							// passing deleteNote function to the note
 							onDeleteNoteClicked={deleteNote}
 						/>
 					</Col>

@@ -10,6 +10,7 @@ import stylesUtils from '../styles/utils.module.css';
 interface NoteProps {
 	note: NoteModel;
 	onNoteClicked: (note: NoteModel) => void;
+	//this call back to delete it, will not return anything after deleting note
 	onDeleteNoteClicked: (note: NoteModel) => void;
 	className?: string;
 }
@@ -41,6 +42,7 @@ export default function Notes({
 						//text-muted greys the icon, ms-auto auto alligns it
 						className='text-muted ms-auto'
 						onClick={(e) => {
+							//calls the delete function on the note
 							onDeleteNoteClicked(note);
 							//allows click to go through
 							e.stopPropagation();
