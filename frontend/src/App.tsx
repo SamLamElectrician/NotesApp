@@ -31,10 +31,12 @@ function App() {
 		//no array means executes every render
 	}, []);
 
+	//deleting notes with note(interface of Note Model)
 	async function deleteNote(note: NoteModel) {
 		try {
+			//wait for call from front end to backend in network/notes_api.ts
 			await NotesApi.deleteNote(note._id);
-			//removes notes from list
+			//removes notes from list via note id
 			setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
 		} catch (error) {
 			console.error(error);

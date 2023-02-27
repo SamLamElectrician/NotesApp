@@ -5,6 +5,7 @@ import { NoteInput } from '../network/notes_api';
 import * as NotesApi from '../network/notes_api';
 
 interface AddEditNoteDialogueProps {
+	//optional argument to edit note
 	noteToEdit?: Note;
 	onDismiss: () => void;
 	onNoteSaved: (note: Note) => void;
@@ -21,6 +22,7 @@ export default function AddEditNoteDialogue({
 		handleSubmit,
 		formState: { errors, isSubmitting },
 	} = useForm<NoteInput>({
+		//define default values --> changes based on what note to edit or adding note
 		defaultValues: {
 			title: noteToEdit?.title || '',
 			text: noteToEdit?.text || '',
@@ -29,9 +31,12 @@ export default function AddEditNoteDialogue({
 
 	async function onSubmit(input: NoteInput) {
 		try {
+			//not initialized yet
 			let noteResponse: Note;
+			//if notetoEdit is true, update a note
 			if (noteToEdit) {
 				noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+				//if noteToEdit doesn't exist, create a note to put in
 			} else {
 				noteResponse = await NotesApi.createNote(input);
 			}

@@ -46,12 +46,17 @@ export async function deleteNote(noteId: string) {
 	await fetchData('/api/notes/' + noteId, { method: 'DELETE' });
 }
 
+//updating note
 export async function updateNote(
+	//taking ID to find the note and note input of title/text
+	//returns a promise of note
 	noteId: string,
 	note: NoteInput
 ): Promise<Note> {
+	//waits for the api data based on note ID, patches it
 	const response = await fetchData('/api/notes/' + noteId, {
 		method: 'PATCH',
+		//sending json data
 		headers: {
 			'Content-Type': 'application/json',
 		},
