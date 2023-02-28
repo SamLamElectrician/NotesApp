@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Notes';
 import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
-
 import styles from './styles/NotePage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
@@ -60,7 +59,7 @@ function App() {
 	const notesGrid = (
 		//g-4 from bootstrap docs
 		//sizing relative to screen size and how many rows
-		<Row xs={1} md={2} xl={3} className='g-4'>
+		<Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
 			{notes.map((note) => (
 				<Col key={note._id}>
 					<Note
@@ -77,7 +76,7 @@ function App() {
 	);
 
 	return (
-		<Container>
+		<Container className={styles.notesPage}>
 			<Button
 				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
 				onClick={() => {
