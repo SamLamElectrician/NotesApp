@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Notes';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
+
 import styles from './styles/NotePage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
@@ -18,19 +19,27 @@ function App() {
 	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 	//upon opening apps, notes will be loading in
 	const [notesLoading, setNotesLoading] = useState(true);
+	//error handle for when loading notes fail
+	const [showNotesLoadingError, setShowNotesLoadingError] = useState(false);
 
 	//executes sideeffects outside render
 	useEffect(() => {
 		async function loadNotes() {
 			try {
+				//error for refresh
+				setShowNotesLoadingError(false);
+				setNotesLoading(true);
 				const notes = await NotesApi.fetchNotes();
 				setNotes(notes);
 			} catch (error) {
 				console.log(error);
-				alert(error);
+				setShowNotesLoadingError(true);
+			} finally {
+				setNotesLoading(false);
 			}
 		}
 		loadNotes();
+
 		//empty array dependency executes one time,
 		//no array means executes every render
 	}, []);
@@ -48,6 +57,25 @@ function App() {
 		}
 	}
 
+	const notesGrid = (
+		//g-4 from bootstrap docs
+		//sizing relative to screen size and how many rows
+		<Row xs={1} md={2} xl={3} className='g-4'>
+			{notes.map((note) => (
+				<Col key={note._id}>
+					<Note
+						note={note}
+						className={styles.note}
+						//function to edit note
+						onNoteClicked={setNoteToEdit}
+						// passing deleteNote function to the note
+						onDeleteNoteClicked={deleteNote}
+					/>
+				</Col>
+			))}
+		</Row>
+	);
+
 	return (
 		<Container>
 			<Button
@@ -59,22 +87,20 @@ function App() {
 				<FaPlus />
 				Add New Note
 			</Button>
-			{/* sizing relative to screen size and how many rows */}
-			{/* g-4 from bootstrap docs */}
-			<Row xs={1} md={2} xl={3} className='g-4'>
-				{notes.map((note) => (
-					<Col key={note._id}>
-						<Note
-							note={note}
-							className={styles.note}
-							//function to edit note
-							onNoteClicked={setNoteToEdit}
-							// passing deleteNote function to the note
-							onDeleteNoteClicked={deleteNote}
-						/>
-					</Col>
-				))}
-			</Row>
+			{/* shows loading if loading is true */}
+			{notesLoading && <Spinner animation='border' variant='primary' />}
+			{/* shows p tag if notes has an error reaching the api */}
+			{showNotesLoadingError && (
+				<p>Something went wrong. Please refresh the page.</p>
+			)}
+			{/* first logical if operator to check if notes are loading and if there is an error otherwise move inwards */}
+			{!notesLoading && !showNotesLoadingError && (
+				<>
+					{/* ternary depending on how many notes you have */}
+					{notes.length > 0 ? notesGrid : <p>You don't have any notes yet!</p>}
+				</>
+			)}
+
 			{/* inline if with logical && operator */}
 			{showAddNoteDialog && (
 				<AddEditNoteDialogue
