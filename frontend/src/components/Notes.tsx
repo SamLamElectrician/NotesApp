@@ -9,6 +9,7 @@ import stylesUtils from '../styles/utils.module.css';
 //typescript interface for the props
 interface NoteProps {
 	note: NoteModel;
+	//forwards to the function
 	onNoteClicked: (note: NoteModel) => void;
 	//this call back to delete it, will not return anything after deleting note
 	onDeleteNoteClicked: (note: NoteModel) => void;
@@ -17,7 +18,9 @@ interface NoteProps {
 
 export default function Notes({
 	note,
+	//call for add or edit
 	onNoteClicked,
+	//call for delete
 	onDeleteNoteClicked,
 	className,
 }: NoteProps) {
@@ -31,6 +34,7 @@ export default function Notes({
 	return (
 		<Card
 			className={`${styles.noteCard} ${className}`}
+			// onclick --> forwards note to function
 			onClick={() => onNoteClicked(note)}
 		>
 			<Card.Body className={styles.cardBody}>

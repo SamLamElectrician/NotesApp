@@ -29,6 +29,7 @@ export default function AddEditNoteDialogue({
 		},
 	});
 
+	//handles the submit of form
 	async function onSubmit(input: NoteInput) {
 		try {
 			//not initialized yet
@@ -51,7 +52,12 @@ export default function AddEditNoteDialogue({
 		<div>
 			<Modal show onHide={onDismiss}>
 				<Modal.Header closeButton>
-					<Modal.Title>{noteToEdit ? 'Edit Note' : 'Add Note'}</Modal.Title>
+					<Modal.Title>
+						{
+							//if noteToEdit note exist than use edit note if not use add note
+							noteToEdit ? 'Edit Note' : 'Add Note'
+						}
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form id='addEditNoteForm' onSubmit={handleSubmit(onSubmit)}>

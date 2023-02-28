@@ -6,6 +6,7 @@ import styles from './styles/NotePage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
 import AddEditNoteDialogue from './components/AddEditNoteDialogue';
+//plus icon
 import { FaPlus } from 'react-icons/fa';
 
 function App() {
@@ -13,7 +14,10 @@ function App() {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
 	//steate to show if modal is open or not
 	const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+	//checks to see if note is there to edit, null if there isn't
 	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
+	//upon opening apps, notes will be loading in
+	const [notesLoading, setNotesLoading] = useState(true);
 
 	//executes sideeffects outside render
 	useEffect(() => {
@@ -63,6 +67,7 @@ function App() {
 						<Note
 							note={note}
 							className={styles.note}
+							//function to edit note
 							onNoteClicked={setNoteToEdit}
 							// passing deleteNote function to the note
 							onDeleteNoteClicked={deleteNote}
@@ -82,12 +87,17 @@ function App() {
 					}}
 				/>
 			)}
+			{/* note to edit component */}
 			{noteToEdit && (
 				<AddEditNoteDialogue
 					noteToEdit={noteToEdit}
+					//resets to null
 					onDismiss={() => setNoteToEdit(null)}
+					//resets the changer
 					onNoteSaved={(updatedNote) => {
+						//hides it and resets to note
 						setNoteToEdit(null);
+						//update the note without calling the api again
 						setNotes(
 							notes.map((existingNote) =>
 								existingNote._id === updatedNote._id
@@ -103,5 +113,3 @@ function App() {
 }
 
 export default App;
-
-///459
