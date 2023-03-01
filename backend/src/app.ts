@@ -6,8 +6,10 @@ import express, { NextFunction, Request, Response } from 'express';
 import notesRoutes from './routes/notes';
 import morgan from 'morgan';
 import createHttpError, { isHttpError } from 'http-errors';
-
 import userRoutes from './routes/user';
+import session from 'express-session';
+import env from './utility/validateEnv';
+import MongoStore from 'connect-mongo';
 
 const app = express();
 //middle ware for logging information and amount of information printed to console
@@ -17,6 +19,25 @@ app.use(morgan('dev'));
 //sets up express to accept and send json
 app.use(express.json());
 
+//express session needs to be after json body but before routes
+app.use(
+	session({
+		//stored session secret in env so its not hardcoded
+		secret: env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			//how long they can use it for
+			maxAge: 60 * 60 * 1000,
+		},
+		//user stays login as log as they are using the website
+		rolling: true,
+		//where session data will be stored
+		store: MongoStore.create({
+			mongoUrl: env.MONGO_CONNECTION_STRING,
+		}),
+	})
+);
 //middle ware that goes to notes route
 //changes url to api/notes
 app.use('/api/notes', notesRoutes);
