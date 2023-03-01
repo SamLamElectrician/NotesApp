@@ -82,9 +82,25 @@ export const login: RequestHandler<
 	const password = req.body.password;
 
 	try {
+		//error handling for checking parameters
 		if (!username || !password) {
 			throw createHttpError(400, 'Parameters Missing');
 		}
+		//check for user
+		//select sends back email and password due to default not returning both
+		const user = await UserModel.findOne({ username: username })
+			.select('+password +email')
+			.exec();
+
+		//if no user, throws error
+		//general string to prevent hacker if there is an account or not
+		if (!user) {
+			throw createHttpError(401, 'Invalid credentials');
+		}
+
+		//if found user
+		//bcrypt will compare hash password to string
+		const passwordMatch = await bcrypt.compare(password, user.password);
 	} catch (error) {
 		next(error);
 	}
