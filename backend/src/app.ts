@@ -7,6 +7,8 @@ import notesRoutes from './routes/notes';
 import morgan from 'morgan';
 import createHttpError, { isHttpError } from 'http-errors';
 
+import userRoutes from './routes/user';
+
 const app = express();
 //middle ware for logging information and amount of information printed to console
 // prints log of all the end point we access
@@ -18,6 +20,9 @@ app.use(express.json());
 //middle ware that goes to notes route
 //changes url to api/notes
 app.use('/api/notes', notesRoutes);
+
+//routes for user
+app.use('/api/users', userRoutes);
 
 // only typing for errors
 // error handling for unknown endpoint
