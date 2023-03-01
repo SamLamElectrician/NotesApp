@@ -127,3 +127,17 @@ export const login: RequestHandler<
 		next(error);
 	}
 };
+
+//controlling log out feature
+export const logOut: RequestHandler = (req, res, next) => [
+	//since destroy is not a promise you need a call baack
+	//this is the function to destroy the session
+	req.session.destroy((error) => {
+		if (error) {
+			next(error);
+		} else {
+			//since we dont send a json body we need to sendStatus instead of status
+			res.sendStatus(200);
+		}
+	}),
+];
