@@ -2,7 +2,21 @@ import { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
 import UserModel from '../models/user';
 import bcrypt from 'bcrypt';
-import user from '../models/user';
+
+export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
+	const authenticatedUserId = req.session.userId;
+	try {
+		if (!authenticatedUserId) {
+			throw createHttpError(401, 'User not authenticated');
+		}
+		const user = await UserModel.findById(authenticatedUserId)
+			.select('+email')
+			.exec();
+		res.status(200).json(user);
+	} catch (error) {
+		next(error);
+	}
+};
 
 interface SignUpBody {
 	username?: string;
@@ -101,6 +115,14 @@ export const login: RequestHandler<
 		//if found user
 		//bcrypt will compare hash password to string
 		const passwordMatch = await bcrypt.compare(password, user.password);
+
+		//checking password match
+		if (!passwordMatch) {
+			throw createHttpError(401, 'Invalid credentials');
+		}
+		//because user/email and password match database we can init a session
+		req.session.userId = user._id;
+		res.status(201).json(user);
 	} catch (error) {
 		next(error);
 	}
