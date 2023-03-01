@@ -29,7 +29,7 @@ export const signUp: RequestHandler<
 		const existingUsername = await UserModel.findOne({
 			username: username,
 		}).exec();
-		//checks if there is an existing username within the database
+		// checks if there is an existing username within the database
 		if (existingUsername) {
 			throw createHttpError(
 				409,
@@ -54,6 +54,11 @@ export const signUp: RequestHandler<
 			email: email,
 			password: passwordHashed,
 		});
+
+		//adds a session using express-sessions package to have a session to login
+		//stores data using mongo-connect package
+		//userId not known in typescript so you need to make a type
+		req.session.userId = newUser._id;
 
 		res.status(201).json(newUser);
 	} catch (error) {
