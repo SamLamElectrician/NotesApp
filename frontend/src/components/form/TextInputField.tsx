@@ -27,7 +27,7 @@ const TextInputField = ({
 				isInvalid={!!error}
 			/>
 			<Form.Control.Feedback type='invalid'>
-				{error.title?.message}
+				{error?.message}
 			</Form.Control.Feedback>
 		</Form.Group>
 	);
