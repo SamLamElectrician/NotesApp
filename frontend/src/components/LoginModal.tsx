@@ -1,6 +1,9 @@
 import { Modal, ModalBody } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { User } from '../models/user';
+import { LoginCredentials } from '../network/notes_api';
 import TextInputField from './form/TextInputField';
+import * as NotesApi from '../network/notes_api';
 
 interface LoginModalProps {
 	onDismiss: () => void;
@@ -8,6 +11,21 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<LoginCredentials>();
+
+	async function onSubmit(credentials: LoginCredentials) {
+		try {
+			const user = await NotesApi.login;
+			onLoginSuccessful(user);
+		} catch (error) {
+			alert(error);
+			console.error(error);
+		}
+	}
 	return (
 		<Modal>
 			<Modal.Header>
