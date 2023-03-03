@@ -4,6 +4,7 @@ import { SignUpCredentials } from '../network/notes_api';
 import * as NotesApi from '../network/notes_api';
 import { Form, Modal, Button } from 'react-bootstrap';
 import TextInputField from './form/TextInputField';
+import styleUtils from '../styles/utils.module.css';
 
 interface SignUpModalProps {
 	onDismiss: () => void;
@@ -63,7 +64,13 @@ export default function SignUpModal({
 						registerOptions={{ required: 'Required' }}
 						error={errors.password}
 					/>
-					<Button type='submit'>Sign Up</Button>
+					<Button
+						type='submit'
+						disabled={isSubmitting}
+						className={styleUtils.width100}
+					>
+						Sign Up
+					</Button>
 				</Form>
 			</Modal.Body>
 		</Modal>
