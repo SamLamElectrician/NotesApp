@@ -8,6 +8,7 @@ import * as NotesApi from './network/notes_api';
 import AddEditNoteDialogue from './components/AddEditNoteDialogue';
 //plus icon
 import { FaPlus } from 'react-icons/fa';
+import SignUpModal from './components/SignUpModal';
 
 function App() {
 	//empty array state
@@ -132,6 +133,10 @@ function App() {
 						);
 					}}
 				/>
+			)}
+
+			{true && (
+				<SignUpModal onDismiss={() => {}} onSignUpSuccessful={() => {}} />
 			)}
 		</Container>
 	);
