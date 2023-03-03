@@ -1,9 +1,10 @@
-import { Modal, ModalBody } from 'react-bootstrap';
+import { Modal, ModalBody, Form, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { User } from '../models/user';
 import { LoginCredentials } from '../network/notes_api';
 import TextInputField from './form/TextInputField';
 import * as NotesApi from '../network/notes_api';
+import styleUtils from '../styles/utils.module.css';
 
 interface LoginModalProps {
 	onDismiss: () => void;
@@ -19,7 +20,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 
 	async function onSubmit(credentials: LoginCredentials) {
 		try {
-			const user = await NotesApi.login;
+			const user = await NotesApi.login(credentials);
 			onLoginSuccessful(user);
 		} catch (error) {
 			alert(error);
@@ -32,29 +33,31 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 				<Modal.Title>Login</Modal.Title>
 			</Modal.Header>
 			<ModalBody>
-				<TextInputField
-					name='username'
-					label='Username'
-					type='text'
-					placeholder='Username'
-					register={register}
-					registerOptions={{ required: 'Required' }}
-					error={errors.username}
-				/>
-				<TextInputField
-					name='password'
-					label='Password'
-					type='password'
-					placeholder='Password'
-					register={register}
-					registerOptions={{ required: 'Required' }}
-					error={errors.password}
-				/>
-				<Button
-					type='submit'
-					disabled={isSubmitting}
-					className={styleUtils.width100}
-				></Button>
+				<Form onSubmit={handleSubmit(onSubmit)}>
+					<TextInputField
+						name='username'
+						label='Username'
+						type='text'
+						placeholder='Username'
+						register={register}
+						registerOptions={{ required: 'Required' }}
+						error={errors.username}
+					/>
+					<TextInputField
+						name='password'
+						label='Password'
+						type='password'
+						placeholder='Password'
+						register={register}
+						registerOptions={{ required: 'Required' }}
+						error={errors.password}
+					/>
+					<Button
+						type='submit'
+						disabled={isSubmitting}
+						className={styleUtils.width100}
+					></Button>
+				</Form>
 			</ModalBody>
 		</Modal>
 	);
