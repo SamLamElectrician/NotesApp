@@ -10,6 +10,7 @@ import AddEditNoteDialogue from './components/AddEditNoteDialogue';
 import { FaPlus } from 'react-icons/fa';
 import SignUpModal from './components/SignUpModal';
 import LoginModal from './components/LoginModal';
+import NavBar from './components/NavBar';
 
 function App() {
 	//empty array state
@@ -78,69 +79,83 @@ function App() {
 	);
 
 	return (
-		<Container className={styles.notesPage}>
-			<Button
-				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
-				onClick={() => {
-					setShowAddNoteDialog(true);
-				}}
-			>
-				<FaPlus />
-				Add New Note
-			</Button>
-			{/* shows loading if loading is true */}
-			{notesLoading && <Spinner animation='border' variant='primary' />}
-			{/* shows p tag if notes has an error reaching the api */}
-			{showNotesLoadingError && (
-				<p>Something went wrong. Please refresh the page.</p>
-			)}
-			{/* first logical if operator to check if notes are loading and if there is an error otherwise move inwards */}
-			{!notesLoading && !showNotesLoadingError && (
-				<>
-					{/* ternary depending on how many notes you have */}
-					{notes.length > 0 ? notesGrid : <p>You don't have any notes yet!</p>}
-				</>
-			)}
+		<div>
+			<NavBar
+				loggedInUser={null}
+				onLoginClicked={() => {}}
+				onSignUpClicked={() => {}}
+				onLogoutSuccessful={() => {}}
+			></NavBar>
+			<Container className={styles.notesPage}>
+				<Button
+					className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
+					onClick={() => {
+						setShowAddNoteDialog(true);
+					}}
+				>
+					<FaPlus />
+					Add New Note
+				</Button>
+				{/* shows loading if loading is true */}
+				{notesLoading && <Spinner animation='border' variant='primary' />}
+				{/* shows p tag if notes has an error reaching the api */}
+				{showNotesLoadingError && (
+					<p>Something went wrong. Please refresh the page.</p>
+				)}
+				{/* first logical if operator to check if notes are loading and if there is an error otherwise move inwards */}
+				{!notesLoading && !showNotesLoadingError && (
+					<>
+						{/* ternary depending on how many notes you have */}
+						{notes.length > 0 ? (
+							notesGrid
+						) : (
+							<p>You don't have any notes yet!</p>
+						)}
+					</>
+				)}
 
-			{/* inline if with logical && operator */}
-			{showAddNoteDialog && (
-				<AddEditNoteDialogue
-					onDismiss={() => {
-						setShowAddNoteDialog(false);
-					}}
-					onNoteSaved={(newNote) => {
-						setNotes([...notes, newNote]);
-						setShowAddNoteDialog(false);
-					}}
-				/>
-			)}
-			{/* note to edit component */}
-			{noteToEdit && (
-				<AddEditNoteDialogue
-					noteToEdit={noteToEdit}
-					//resets to null
-					onDismiss={() => setNoteToEdit(null)}
-					//resets the changer
-					onNoteSaved={(updatedNote) => {
-						//hides it and resets to note
-						setNoteToEdit(null);
-						//update the note without calling the api again
-						setNotes(
-							notes.map((existingNote) =>
-								existingNote._id === updatedNote._id
-									? updatedNote
-									: existingNote
-							)
-						);
-					}}
-				/>
-			)}
+				{/* inline if with logical && operator */}
+				{showAddNoteDialog && (
+					<AddEditNoteDialogue
+						onDismiss={() => {
+							setShowAddNoteDialog(false);
+						}}
+						onNoteSaved={(newNote) => {
+							setNotes([...notes, newNote]);
+							setShowAddNoteDialog(false);
+						}}
+					/>
+				)}
+				{/* note to edit component */}
+				{noteToEdit && (
+					<AddEditNoteDialogue
+						noteToEdit={noteToEdit}
+						//resets to null
+						onDismiss={() => setNoteToEdit(null)}
+						//resets the changer
+						onNoteSaved={(updatedNote) => {
+							//hides it and resets to note
+							setNoteToEdit(null);
+							//update the note without calling the api again
+							setNotes(
+								notes.map((existingNote) =>
+									existingNote._id === updatedNote._id
+										? updatedNote
+										: existingNote
+								)
+							);
+						}}
+					/>
+				)}
 
-			{false && (
-				<SignUpModal onDismiss={() => {}} onSignUpSuccessful={() => {}} />
-			)}
-			{true && <LoginModal onDismiss={() => {}} onLoginSuccessful={() => {}} />}
-		</Container>
+				{false && (
+					<SignUpModal onDismiss={() => {}} onSignUpSuccessful={() => {}} />
+				)}
+				{false && (
+					<LoginModal onDismiss={() => {}} onLoginSuccessful={() => {}} />
+				)}
+			</Container>
+		</div>
 	);
 }
 
