@@ -1,4 +1,4 @@
-import { Navbar } from 'react-bootstrap';
+import { Button, Navbar } from 'react-bootstrap';
 import { User } from '../models/user';
 import * as NotesApi from '../network/notes_api';
 
@@ -23,6 +23,7 @@ export default function NavBarLoggedInView({
 	return (
 		<>
 			<Navbar.Text className='me-2'>Signed in as:{user.username}</Navbar.Text>
+			<Button onClick={logout}>Log Out</Button>
 		</>
 	);
 }
