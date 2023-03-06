@@ -6,13 +6,15 @@ import NavBar from './components/NavBar';
 import SignUpModal from './components/SignUpModal';
 import { User } from './models/user';
 import * as NotesApi from './network/notes_api';
+import NotesPageLoggedInView from './components/NotesPageLoggedInView';
+import NotesPageLoggedOutView from './components/NotesPageLoggedOutView';
 function App() {
 	//checks if user is logged in following user interface or null
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 	//controls sign up
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	//controls login
-	const [showLoginpModal, setLoginModal] = useState(false);
+	const [showLoginModal, setLoginModal] = useState(false);
 
 	useEffect(() => {
 		async function fetchLoggedInUser() {
@@ -35,13 +37,26 @@ function App() {
 				onLogoutSuccessful={() => setLoggedInUser(null)}
 			></NavBar>
 			<Container className={styles.notesPage}>
-				{false && (
-					<SignUpModal onDismiss={() => {}} onSignUpSuccessful={() => {}} />
-				)}
-				{false && (
-					<LoginModal onDismiss={() => {}} onLoginSuccessful={() => {}} />
-				)}
+				<>
+					{loggedInUser ? (
+						<NotesPageLoggedInView />
+					) : (
+						<NotesPageLoggedOutView />
+					)}
+				</>
 			</Container>
+			{showSignUpModal && (
+				<SignUpModal
+					onDismiss={() => setShowSignUpModal(false)}
+					onSignUpSuccessful={() => {}}
+				/>
+			)}
+			{showLoginModal && (
+				<LoginModal
+					onDismiss={() => setLoginModal(false)}
+					onLoginSuccessful={() => {}}
+				/>
+			)}
 		</div>
 	);
 }

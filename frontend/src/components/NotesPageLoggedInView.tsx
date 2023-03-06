@@ -5,8 +5,8 @@ import Note from '../components/Notes';
 import { Note as NoteModel } from '../models/note';
 import * as NotesApi from '../network/notes_api';
 import AddEditNoteDialogue from './AddEditNoteDialogue';
-import styles from './styles/NotePage.module.css';
-import styleUtils from './styles/utils.module.css';
+import styles from '../styles/NotePage.module.css';
+import styleUtils from '../styles/utils.module.css';
 
 export default function NotesPageLoggedInView() {
 	//empty array state
