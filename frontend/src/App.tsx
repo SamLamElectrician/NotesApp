@@ -48,13 +48,19 @@ function App() {
 			{showSignUpModal && (
 				<SignUpModal
 					onDismiss={() => setShowSignUpModal(false)}
-					onSignUpSuccessful={() => {}}
+					onSignUpSuccessful={(user) => {
+						setLoggedInUser(user);
+						setShowSignUpModal(false);
+					}}
 				/>
 			)}
 			{showLoginModal && (
 				<LoginModal
 					onDismiss={() => setLoginModal(false)}
-					onLoginSuccessful={() => {}}
+					onLoginSuccessful={(user) => {
+						setLoggedInUser(user);
+						setLoginModal(false);
+					}}
 				/>
 			)}
 		</div>
