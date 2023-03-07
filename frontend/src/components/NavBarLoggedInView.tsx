@@ -22,7 +22,7 @@ export default function NavBarLoggedInView({
 	}
 	return (
 		<>
-			<Navbar.Text className='me-2'>Signed in as:{user.username}</Navbar.Text>
+			<Navbar.Text className='me-2'>Signed in as: {user.username}</Navbar.Text>
 			<Button onClick={logout}>Log Out</Button>
 		</>
 	);
