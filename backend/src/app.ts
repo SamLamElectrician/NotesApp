@@ -41,11 +41,11 @@ app.use(
 );
 //middle ware that goes to notes route
 //changes url to api/notes
-app.use('/api/notes', notesRoutes);
+app.use('/api/notes', requiresAuth, notesRoutes);
 
 //routes for user
 //require auth checks for user
-app.use('/api/users', requiresAuth, userRoutes);
+app.use('/api/users', userRoutes);
 
 // only typing for errors
 // error handling for unknown endpoint

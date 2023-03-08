@@ -1,7 +1,7 @@
 // node model for data for mongoose
 // defines the schema for the db
 
-import mongoose, { InferSchemaType, Schema, model } from 'mongoose';
+import { InferSchemaType, Schema, model } from 'mongoose';
 
 //how the data will be structured
 const noteSchema = new Schema(
