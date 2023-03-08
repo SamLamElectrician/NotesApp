@@ -10,6 +10,7 @@ import userRoutes from './routes/user';
 import session from 'express-session';
 import env from './utility/validateEnv';
 import MongoStore from 'connect-mongo';
+import { requiresAuth } from './middleware/auth';
 
 const app = express();
 //middle ware for logging information and amount of information printed to console
@@ -43,7 +44,8 @@ app.use(
 app.use('/api/notes', notesRoutes);
 
 //routes for user
-app.use('/api/users', userRoutes);
+//require auth checks for user
+app.use('/api/users', requiresAuth, userRoutes);
 
 // only typing for errors
 // error handling for unknown endpoint
