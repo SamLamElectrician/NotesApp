@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import LoginModal from './components/LoginModal';
 import NavBar from './components/NavBar';
 import SignUpModal from './components/SignUpModal';
 import { User } from './models/user';
 import * as NotesApi from './network/notes_api';
+import NotesPage from './pages/NotesPage';
+import NotFoundPage from './pages/NotFoundPage';
+import PrivacyPage from './pages/PrivacyPage';
+import styles from './styles/App.module.css';
 
 function App() {
 	//checks if user is logged in following user interface or null
@@ -36,9 +41,14 @@ function App() {
 					onSignUpClicked={() => setShowSignUpModal(true)}
 					onLogoutSuccessful={() => setLoggedInUser(null)}
 				></NavBar>
-				<Container>
+				<Container className={styles.pageContainer}>
 					<Routes>
-						<Route path='/'></Route>
+						<Route
+							path='/'
+							element={<NotesPage loggedInUser={loggedInUser} />}
+						/>
+						<Route path='/privacy' element={<PrivacyPage />} />
+						<Route path='/*' element={<NotFoundPage />} />
 					</Routes>
 				</Container>
 				{showSignUpModal && (
