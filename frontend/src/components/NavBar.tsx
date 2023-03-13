@@ -20,11 +20,14 @@ export default function NavBar({
 	return (
 		<Navbar bg='primary' variant='dark' expand='lg' sticky='top'>
 			<Container>
-				<Navbar.Brand>Cool Notes App</Navbar.Brand>
+				<Navbar.Brand as={Link} to='/'>
+					Cool Notes App
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls='sm-navbar'></Navbar.Toggle>
 				<Navbar.Collapse id='main-navbar'>
 					<Nav>
 						{/* as means it will act as react-router-dom Link tag */}
+						{/* also called render props */}
 						<Nav.Link as={Link} to='/privacy'>
 							Privacy
 						</Nav.Link>
@@ -47,3 +50,5 @@ export default function NavBar({
 		</Navbar>
 	);
 }
+
+//735
