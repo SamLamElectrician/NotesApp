@@ -5,6 +5,7 @@ import { LoginCredentials } from '../network/notes_api';
 import TextInputField from './form/TextInputField';
 import * as NotesApi from '../network/notes_api';
 import styleUtils from '../styles/utils.module.css';
+import { useState } from 'react';
 
 interface LoginModalProps {
 	onDismiss: () => void;
@@ -12,6 +13,8 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
+	const [errorText, setErrorText] = useState<string | null>(null);
+
 	const {
 		register,
 		handleSubmit,
