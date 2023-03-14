@@ -2,9 +2,9 @@
 	"name": "starter-express-api",
 	"version": "1.0.0",
 	"description": "",
-	"main": "backend/app.ts",
+	"main": "backend/src/app.ts",
 	"scripts": {
-		"start": "node server.ts"
+		"start": "node src/server.ts"
 	},
 	"repository": {
 		"type": "git",
