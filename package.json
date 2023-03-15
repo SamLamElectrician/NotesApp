@@ -1,5 +1,6 @@
 {
-	"name": "starter-express-api",
+    "homepage": "/",
+	"name": "NotesApp",
 	"version": "1.0.0",
 	"description": "",
 	"main": "backend/dist/server.js",
