@@ -11,12 +11,17 @@ import session from 'express-session';
 import env from './utility/validateEnv';
 import MongoStore from 'connect-mongo';
 import { requiresAuth } from './middleware/auth';
+import * as path from 'path';
 
 const app = express();
+
 //middle ware for logging information and amount of information printed to console
 // prints log of all the end point we access
 app.use(morgan('dev'));
-
+app.use('static', express.static(__dirname + '../../frontend/src/App.tsx'));
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
 //sets up express to accept and send json
 app.use(express.json());
 
